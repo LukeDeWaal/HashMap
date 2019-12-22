@@ -21,8 +21,8 @@ void* resolve_collision(void *old_value, void *new_value) {
 }
 
 void destroy_data(void* data){
-	free((void*) data);
-	//data = NULL;
+	//free((void*) data);
+	data = NULL;
 }
 
 unsigned your_own_hash(const char *key) {
@@ -41,7 +41,7 @@ int main() {
 	const char * key_3    = "ad";
 	const char * key_4    = "xy";
 	const char * key_5    = "ba";
-	const char * key_6	  = "x";	
+	//const char * key_6	  = "x";	
 
 	// Insert ("ab" -> "CSE2425").
 	insert_data(hm, key_1, string_1, resolve_collision);
@@ -71,12 +71,11 @@ int main() {
 		Node* curr = hm->list[j];
 		while(curr){
 			if(strcmp(key_1, curr->key) == 0){
-				assert(!(key_1 == curr->key));
+				assert(key_1 != curr->key);
 			}
 			curr = curr->next;
 		}
 	}
-	
 
 	// Iterate the hash map
 	iterate(hm, print_element);
@@ -91,7 +90,7 @@ int main() {
 #endif
 
 	// Delete key "cd".
-	remove_data(hm, key_2, NULL);
+	remove_data(hm, key_2, destroy_data);
 	assert(get_data(hm, key_2) == NULL);
 
 	remove_data(hm, key_2, NULL);
